@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
         // The sub types that extend the SpeechletRequest class.
         @Type(value = LaunchRequest.class),
         @Type(value = IntentRequest.class),
+        @Type(value = AudioPlayerRequest.class),
         @Type(value = SessionStartedRequest.class),
         @Type(value = SessionEndedRequest.class)
 })
@@ -35,6 +36,18 @@ public abstract class SpeechletRequest {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ISO_8601_FORMAT, timezone = "UTC")
     private final Date timestamp;
+
+    private String token = "";
+
+    private int offsetInMilliseconds = 0;
+
+    private String locale = "";
+
+    private String audioType = "";
+
+
+
+
 
     private static final String ISO_8601_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
@@ -48,6 +61,15 @@ public abstract class SpeechletRequest {
      */
     protected SpeechletRequest(final String requestId, final Date timestamp) {
         this.requestId = requestId;
+        this.timestamp = (timestamp != null) ? new Date(timestamp.getTime()) : null;
+    }
+
+    protected SpeechletRequest(final String requestId, final Date timestamp, String audioType, String token, int offsetInMilliseconds, String locale) {
+        this.requestId = requestId;
+        this.audioType = audioType;
+        this.token = token;
+        this.locale = locale;
+        this.offsetInMilliseconds = offsetInMilliseconds;
         this.timestamp = (timestamp != null) ? new Date(timestamp.getTime()) : null;
     }
 

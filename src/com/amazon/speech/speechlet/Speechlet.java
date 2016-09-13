@@ -101,5 +101,13 @@ public interface Speechlet {
      * @throws SpeechletException
      *             for any errors encountered in the processing of the request
      */
-    void onSessionEnded(SessionEndedRequest request, Session session) throws SpeechletException;
+	void onSessionEnded(SessionEndedRequest request, Session session) throws SpeechletException;
+	/**
+	 * callback for an audio player request
+     * @param session
+     * @return
+     * @throws SpeechletException
+     */
+    SpeechletResponse onAudioPlayerRequest(AudioPlayerRequest request, Session session) throws SpeechletException;
+
 }
