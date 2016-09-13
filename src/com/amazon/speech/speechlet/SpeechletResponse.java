@@ -11,6 +11,7 @@
 package com.amazon.speech.speechlet;
 
 import com.amazon.speech.ui.Card;
+import com.amazon.speech.ui.Directive;
 import com.amazon.speech.ui.OutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -28,7 +29,12 @@ public class SpeechletResponse {
     private OutputSpeech outputSpeech = null;
     private Card card = null;
     private Reprompt reprompt = null;
+    private Directive directive = null;
     private boolean shouldEndSession = true;
+
+    public void setDirective(Directive directive) {
+        this.directive = directive;
+    }
 
     /**
      * Returns the speech associated with this response.
@@ -94,6 +100,10 @@ public class SpeechletResponse {
      * @return the reprompt
      */
     public Reprompt getReprompt() {
+        return reprompt;
+    }
+
+    public Reprompt getDirective() {
         return reprompt;
     }
 
