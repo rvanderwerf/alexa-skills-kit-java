@@ -139,6 +139,18 @@ public class SpeechletResponse {
         return response;
     }
 
+    public static SpeechletResponse newTellResponse(final OutputSpeech outputSpeech, Directive directive) {
+        if (outputSpeech == null) {
+            throw new IllegalArgumentException("OutputSpeech cannot be null");
+        }
+
+        SpeechletResponse response = new SpeechletResponse();
+        response.setDirective(directive);
+        response.setShouldEndSession(true);
+        response.setOutputSpeech(outputSpeech);
+        return response;
+    }
+
     /**
      * Creates and returns a response intended to tell the user something, both in speech and with a
      * graphical card in the companion app. After the tell output is read to the user, the session
@@ -152,6 +164,16 @@ public class SpeechletResponse {
      *            card to display in the companion application
      * @return SpeechletResponse spoken and visual response for the given input
      */
+    public static SpeechletResponse newTellResponse(final OutputSpeech outputSpeech, final Card card, final Directive directive) {
+        if (card == null) {
+            throw new IllegalArgumentException("Card cannot be null");
+        }
+
+        SpeechletResponse response = newTellResponse(outputSpeech,directive);
+        response.setCard(card);
+        return response;
+    }
+
     public static SpeechletResponse newTellResponse(final OutputSpeech outputSpeech, final Card card) {
         if (card == null) {
             throw new IllegalArgumentException("Card cannot be null");
@@ -194,6 +216,25 @@ public class SpeechletResponse {
         return response;
     }
 
+    public static SpeechletResponse newAskResponse(final OutputSpeech outputSpeech,
+                                                   final Reprompt reprompt,
+                                                   final Directive directive) {
+        if (outputSpeech == null) {
+            throw new IllegalArgumentException("OutputSpeech cannot be null");
+        }
+
+        if (reprompt == null) {
+            throw new IllegalArgumentException("Reprompt cannot be null");
+        }
+
+        SpeechletResponse response = new SpeechletResponse();
+        response.setShouldEndSession(false);
+        response.setOutputSpeech(outputSpeech);
+        response.setReprompt(reprompt);
+        response.setDirective(directive);
+        return response;
+    }
+
     /**
      * Creates and returns a response intended to ask the user a question, both in speech and with a
      * graphical card displayed in the companion app. After the ask response is read to the user,
@@ -218,6 +259,19 @@ public class SpeechletResponse {
         }
 
         SpeechletResponse response = newAskResponse(outputSpeech, reprompt);
+        response.setCard(card);
+        return response;
+    }
+
+    public static SpeechletResponse newAskResponse(final OutputSpeech outputSpeech,
+                                                   final Reprompt reprompt,
+                                                   final Card card,
+                                                   final Directive directive) {
+        if (card == null) {
+            throw new IllegalArgumentException("Card cannot be null");
+        }
+
+        SpeechletResponse response = newAskResponse(outputSpeech, reprompt, directive);
         response.setCard(card);
         return response;
     }
