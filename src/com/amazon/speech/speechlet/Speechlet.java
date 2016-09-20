@@ -104,10 +104,10 @@ public interface Speechlet {
 	void onSessionEnded(SessionEndedRequest request, Session session) throws SpeechletException;
 	/**
 	 * callback for an audio player request
-     * @param session
+     * @param context
      * @return
      * @throws SpeechletException
      */
-    SpeechletResponse onAudioPlayerRequest(AudioPlayerRequest request, Session session) throws SpeechletException;
+    SpeechletResponse onAudioPlayerRequest(AudioPlayerRequest request, Context context) throws SpeechletException;
 
 }

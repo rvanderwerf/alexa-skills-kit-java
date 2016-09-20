@@ -37,13 +37,13 @@ public abstract class SpeechletRequest {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ISO_8601_FORMAT, timezone = "UTC")
     private final Date timestamp;
 
-    private String token = "";
+    public String token = "";
 
-    private int offsetInMilliseconds = 0;
+    public int offsetInMilliseconds = 0;
 
-    private String locale = "";
+    public String locale = "";
 
-    private String audioType = "";
+    public String audioType = "";
 
 
 

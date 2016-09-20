@@ -45,7 +45,7 @@ public class SpeechletRequestDispatcher {
      *             indicates a problem from within the included Speechlet
      */
     public SpeechletResponseEnvelope dispatchSpeechletCall(
-            SpeechletRequestEnvelope requestEnvelope, Session session) throws IOException,
+            SpeechletRequestEnvelope requestEnvelope, Session session, Context context) throws IOException,
             SpeechletRequestHandlerException, SpeechletException {
         /*
          * Set to true until we know that the session was ended by the Speechlet or this is an end
@@ -91,6 +91,10 @@ public class SpeechletRequestDispatcher {
             // Don't save session attributes as the session already ended
             saveSessionAttributes = false;
             speechlet.onSessionEnded((SessionEndedRequest) speechletRequest, session);
+        } else if (speechletRequest instanceof AudioPlayerRequest) {
+            // session not implemented for this
+            saveSessionAttributes = false;
+            speechlet.onAudioPlayerRequest((AudioPlayerRequest) speechletRequest, context);
         } else {
             String requestType =
                     (speechletRequest != null) ? speechletRequest.getClass().getName() : null;

@@ -62,6 +62,7 @@ public class SpeechletRequestHandler {
 
         final SpeechletRequest request = requestEnvelope.getRequest();
         final Session session = requestEnvelope.getSession();
+        final Context context = requestEnvelope.getContext();
 
         // Verify request
         for (SpeechletRequestVerifier verifier : requestVerifiers) {
@@ -77,7 +78,7 @@ public class SpeechletRequestHandler {
         // Dispatch request to Speechlet
         SpeechletRequestDispatcher dispatcher = new SpeechletRequestDispatcher(speechlet);
         SpeechletResponseEnvelope responseEnvelope =
-                dispatcher.dispatchSpeechletCall(requestEnvelope, session);
+                dispatcher.dispatchSpeechletCall(requestEnvelope, session, context);
 
         // Verify response
         for (SpeechletResponseVerifier verifier : responseVerifiers) {

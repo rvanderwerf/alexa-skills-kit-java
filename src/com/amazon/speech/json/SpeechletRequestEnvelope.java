@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import com.amazon.speech.Sdk;
+import com.amazon.speech.speechlet.Context;
 import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletRequest;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -47,6 +48,7 @@ public final class SpeechletRequestEnvelope {
     private final String version;
     private final Session session;
     private final SpeechletRequest request;
+    private final Context context;
 
     /**
      * Returns a new builder instance used to construct a new {@code SpeechletRequestEnvelope}.
@@ -67,6 +69,7 @@ public final class SpeechletRequestEnvelope {
         version = builder.version;
         session = builder.session;
         request = builder.request;
+        context = builder.context;
     }
 
     /**
@@ -78,13 +81,17 @@ public final class SpeechletRequestEnvelope {
      *            the session
      * @param request
      *            the speechlet request
+     * @param context
+     *            the speechlet context
      */
     private SpeechletRequestEnvelope(@JsonProperty("version") final String version,
             @JsonProperty("session") final Session session,
-            @JsonProperty("request") final SpeechletRequest request) {
+            @JsonProperty("request") final SpeechletRequest request,
+            @JsonProperty("context") final Context context) {
         this.version = version;
         this.session = session;
         this.request = request;
+        this.context = context;
     }
 
     // ---------
@@ -115,6 +122,10 @@ public final class SpeechletRequestEnvelope {
      */
     public SpeechletRequest getRequest() {
         return request;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     // ---------------------
@@ -168,6 +179,7 @@ public final class SpeechletRequestEnvelope {
         private String version = Sdk.VERSION;
         private Session session;
         private SpeechletRequest request;
+        private Context context;
 
         private Builder() {
         }
@@ -187,6 +199,10 @@ public final class SpeechletRequestEnvelope {
             return this;
         }
 
+        public Builder withContext(final Context context) {
+            this.context = context;
+            return this;
+        }
         public SpeechletRequestEnvelope build() {
             return new SpeechletRequestEnvelope(this);
         }
