@@ -14,8 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * The {@code User} tied to a {@code Speechlet} {@code Session} is the user registered to the device
@@ -26,7 +25,7 @@ import java.util.List;
  * @see SpeechletException
  */
 public class Device {
-    private final List<String> supportedInterfaces;
+    private final Map<String,Object> supportedInterfaces;
 
 
     /**
@@ -39,10 +38,7 @@ public class Device {
     }
 
 
-    @SuppressWarnings("unused")
-    private Device() {
-        this(new ArrayList<String>());
-    }
+
 
     /**
      * Private constructor to return a new {@code User} from a {@code Builder}.
@@ -60,13 +56,18 @@ public class Device {
      * @param supportedInterfaces
      *            list of supported interfaces
      */
-    private Device(@JsonProperty("supportedInterfaces") final List<String> supportedInterfaces) {
+    private Device(@JsonProperty("supportedInterfaces") final Map<String,Object> supportedInterfaces) {
 
-        this.supportedInterfaces = supportedInterfaces;
+        if (supportedInterfaces != null) {
+            this.supportedInterfaces = supportedInterfaces;
+        } else {
+            this.supportedInterfaces = new HashMap<String,Object>();
+        }
+
 
     }
 
-    public List<String> getSupportedInterfaces() {
+    public Map<String,Object> getSupportedInterfaces() {
         return supportedInterfaces;
     }
 
@@ -74,12 +75,12 @@ public class Device {
      * Builder used to construct a new {@code User}.
      */
     public static final class Builder {
-        private List<String> supportedInterfaces;
+        private Map<String,Object> supportedInterfaces;
 
         private Builder() {
         }
 
-        public Builder withSupportedInterfaces(final List<String> supportedInterfaces) {
+        public Builder withSupportedInterfaces(final Map<String,Object> supportedInterfaces) {
             this.supportedInterfaces = supportedInterfaces;
             return this;
         }

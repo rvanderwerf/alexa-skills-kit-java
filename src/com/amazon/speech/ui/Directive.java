@@ -37,9 +37,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 @JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "type")
 @JsonSubTypes({
         // The sub types that extend the Card class.
-        @Type(value = AudioPlayerStop.class),
-        @Type(value = AudioPlayerPlay.class),
-        @Type(value = AudioPlayerClearQueue.class)
+        @Type(value = AudioPlayerStop.class, name = "AudioPlayer.Stop"),
+        @Type(value = AudioPlayerPlay.class, name = "AudioPlayer.Play"),
+        @Type(value = AudioPlayerClearQueue.class, name = "AudioPlayer.ClearQueue")
 })
 public abstract class Directive {
     private String playBehavior;

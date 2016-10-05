@@ -17,6 +17,8 @@ import com.amazon.speech.ui.Reprompt;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import java.util.List;
+
 /**
  * The response to a {@code Speechlet} invocation. Defines text to speak to the user, content to
  * display in the companion application, and whether or not the current {@code Speechlet} session
@@ -29,11 +31,11 @@ public class SpeechletResponse {
     private OutputSpeech outputSpeech = null;
     private Card card = null;
     private Reprompt reprompt = null;
-    private Directive directive = null;
+    private List<Directive> directives = null;
     private boolean shouldEndSession = true;
 
-    public void setDirective(Directive directive) {
-        this.directive = directive;
+    public void setDirectives(List<Directive> directive) {
+        this.directives = directive;
     }
 
     /**
@@ -103,8 +105,14 @@ public class SpeechletResponse {
         return reprompt;
     }
 
-    public Reprompt getDirective() {
-        return reprompt;
+/*
+    public Directive getDirective() {
+        return directive;
+    }
+*/
+
+    public List<Directive> getDirectives() {
+        return directives;
     }
 
     /**
@@ -139,13 +147,13 @@ public class SpeechletResponse {
         return response;
     }
 
-    public static SpeechletResponse newTellResponse(final OutputSpeech outputSpeech, Directive directive) {
+    public static SpeechletResponse newTellResponse(final OutputSpeech outputSpeech, List<Directive> directives) {
         if (outputSpeech == null) {
             throw new IllegalArgumentException("OutputSpeech cannot be null");
         }
 
         SpeechletResponse response = new SpeechletResponse();
-        response.setDirective(directive);
+        response.setDirectives(directives);
         response.setShouldEndSession(true);
         response.setOutputSpeech(outputSpeech);
         return response;
@@ -164,13 +172,14 @@ public class SpeechletResponse {
      *            card to display in the companion application
      * @return SpeechletResponse spoken and visual response for the given input
      */
-    public static SpeechletResponse newTellResponse(final OutputSpeech outputSpeech, final Card card, final Directive directive) {
+    public static SpeechletResponse newTellResponse(final OutputSpeech outputSpeech, final Card card, final List<Directive> directives) {
         if (card == null) {
             throw new IllegalArgumentException("Card cannot be null");
         }
 
-        SpeechletResponse response = newTellResponse(outputSpeech,directive);
+        SpeechletResponse response = newTellResponse(outputSpeech,directives);
         response.setCard(card);
+        response.setDirectives(directives);
         return response;
     }
 
@@ -218,7 +227,7 @@ public class SpeechletResponse {
 
     public static SpeechletResponse newAskResponse(final OutputSpeech outputSpeech,
                                                    final Reprompt reprompt,
-                                                   final Directive directive) {
+                                                   final List<Directive> directives) {
         if (outputSpeech == null) {
             throw new IllegalArgumentException("OutputSpeech cannot be null");
         }
@@ -228,10 +237,10 @@ public class SpeechletResponse {
         }
 
         SpeechletResponse response = new SpeechletResponse();
-        response.setShouldEndSession(false);
+        response.setShouldEndSession(true); //wont play directives unless true
         response.setOutputSpeech(outputSpeech);
         response.setReprompt(reprompt);
-        response.setDirective(directive);
+        response.setDirectives(directives);
         return response;
     }
 
@@ -266,12 +275,12 @@ public class SpeechletResponse {
     public static SpeechletResponse newAskResponse(final OutputSpeech outputSpeech,
                                                    final Reprompt reprompt,
                                                    final Card card,
-                                                   final Directive directive) {
+                                                   final List<Directive> directives) {
         if (card == null) {
             throw new IllegalArgumentException("Card cannot be null");
         }
 
-        SpeechletResponse response = newAskResponse(outputSpeech, reprompt, directive);
+        SpeechletResponse response = newAskResponse(outputSpeech, reprompt, directives);
         response.setCard(card);
         return response;
     }

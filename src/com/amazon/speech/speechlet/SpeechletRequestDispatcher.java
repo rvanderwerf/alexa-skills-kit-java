@@ -11,6 +11,7 @@
 package com.amazon.speech.speechlet;
 
 import java.io.IOException;
+import java.lang.*;
 
 import com.amazon.speech.Sdk;
 import com.amazon.speech.json.SpeechletRequestEnvelope;
@@ -74,18 +75,27 @@ public class SpeechletRequestDispatcher {
                     speechlet.onIntent((IntentRequest) speechletRequest, session);
             responseEnvelope.setResponse(speechletResponse);
 
+
             // Don't save session attributes if the session just ended
             if (speechletResponse != null) {
                 saveSessionAttributes = !speechletResponse.getShouldEndSession();
+                //responseEnvelope.setDirectives(speechletResponse.getDirectives());
+                java.lang.System.out.println("Set directive="+speechletResponse.getDirectives().get(0).getPlayBehavior());
             }
         } else if (speechletRequest instanceof LaunchRequest) {
             final SpeechletResponse speechletResponse =
                     speechlet.onLaunch((LaunchRequest) speechletRequest, session);
             responseEnvelope.setResponse(speechletResponse);
 
+
+
+
             // Don't save session attributes if the session just ended
             if (speechletResponse != null) {
                 saveSessionAttributes = !speechletResponse.getShouldEndSession();
+                //responseEnvelope.setDirectives(speechletResponse.getDirectives());
+                java.lang.System.out.println("Set directive play behavior="+speechletResponse.getDirectives().get(0).getPlayBehavior());
+                java.lang.System.out.println("url="+speechletResponse.getDirectives().get(0).getAudioItem().getStream().getUrl());
             }
         } else if (speechletRequest instanceof SessionEndedRequest) {
             // Don't save session attributes as the session already ended
@@ -112,6 +122,7 @@ public class SpeechletRequestDispatcher {
                 responseEnvelope.setSessionAttributes(session.getAttributes());
             }
         }
+
 
         return responseEnvelope;
     }

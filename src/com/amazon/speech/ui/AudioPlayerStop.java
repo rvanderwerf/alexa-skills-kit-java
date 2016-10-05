@@ -6,10 +6,10 @@ package com.amazon.speech.ui;
 public class AudioPlayerStop extends Directive {
 
 	String audioType = "AudioPlayer.Stop";
-
+    /*
 	public String getAudioType() {
 		return audioType;
-	}
+	}*/
 
 	public void setAudioType(String audioType) {
 		this.audioType = audioType;

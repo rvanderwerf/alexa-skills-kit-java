@@ -5,13 +5,15 @@ package com.amazon.speech.ui;
  */
 public class AudioPlayerPlay extends Directive {
 
-	String audioType = "AudioPlayer.Play";
-
+	private final String audioType = "REPLACE_ALL";
+    /*
 	public String getAudioType() {
 		return audioType;
+	}*/
+
+	public AudioPlayerPlay() {
+		super.setPlayBehavior(audioType);
 	}
 
-	public void setAudioType(String audioType) {
-		this.audioType = audioType;
-	}
+
 }

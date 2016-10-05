@@ -12,9 +12,11 @@ package com.amazon.speech.json;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Map;
 
 import com.amazon.speech.speechlet.SpeechletResponse;
+import com.amazon.speech.ui.Directive;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,13 +32,22 @@ public class SpeechletResponseEnvelope {
      */
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     static {
-        OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.ALWAYS);
     }
 
     private String version;
     private SpeechletResponse response;
     private Map<String, Object> sessionAttributes;
+    //private List<Directive> directives;
 
+   /* public List<Directive> getDirectives() {
+        return directives;
+    }
+*/
+  /*  public void setDirectives(List<Directive> directives) {
+        this.directives = directives;
+    }
+*/
     /**
      * Returns the envelope version.
      *

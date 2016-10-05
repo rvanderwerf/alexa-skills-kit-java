@@ -92,6 +92,8 @@ public class SpeechletRequestHandler {
             }
         }
 
-        return responseEnvelope.toJsonBytes();
+        byte[] jsonBytes = responseEnvelope.toJsonBytes();
+        java.lang.System.out.println("json="+responseEnvelope.toJsonString());
+        return jsonBytes;
     }
 }

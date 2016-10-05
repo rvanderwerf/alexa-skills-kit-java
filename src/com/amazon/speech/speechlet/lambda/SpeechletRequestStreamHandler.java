@@ -79,7 +79,7 @@ public abstract class SpeechletRequestStreamHandler implements RequestStreamHand
      * 
      * <p>
      * Any errors that occur in either the {@code Speechlet} or the {@code SpeechletRequestHandler}
-     * are converted into a {@code RuntimeException}, causing the Lambda call to fail. Details on
+     * are convSyerted into a {@code RuntimeException}, causing the Lambda call to fail. Details on
      * the failure are then available in the Lambda console logs within CloudWatch. {@inheritDoc}
      */
     @Override
@@ -88,6 +88,7 @@ public abstract class SpeechletRequestStreamHandler implements RequestStreamHand
         byte[] serializedSpeechletRequest = IOUtils.toByteArray(input);
         byte[] outputBytes;
         try {
+            System.out.println("request="+new String(serializedSpeechletRequest));
             outputBytes =
                     speechletRequestHandler.handleSpeechletCall(speechlet,
                             serializedSpeechletRequest);
