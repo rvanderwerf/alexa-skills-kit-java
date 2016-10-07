@@ -61,9 +61,16 @@ public class SpeechletRequestHandler {
                 SpeechletRequestEnvelope.fromJson(serializedSpeechletRequest);
 
         final SpeechletRequest request = requestEnvelope.getRequest();
-        final Session session = requestEnvelope.getSession();
+        Session session = requestEnvelope.getSession();
         final Context context = requestEnvelope.getContext();
 
+        java.lang.System.out.println("context.system="+context.getSystem());
+        java.lang.System.out.println("session="+session);
+        if (context.getSystem()!=null && session == null) {
+            // shove the application into the session(which is null) for validation
+            Session.Builder builder = Session.builder();
+            session = builder.withApplication(context.getSystem().getApplication()).withSessionId("AudioType").build();
+        }
         // Verify request
         for (SpeechletRequestVerifier verifier : requestVerifiers) {
             if (!verifier.verify(request, session)) {

@@ -60,8 +60,16 @@ public class ApplicationIdSpeechletRequestVerifier implements SpeechletRequestVe
             return true;
         }
 
+        log.debug("AudioType="+request.audioType);
+
+        if (request.audioType !=null && request.audioType.startsWith("AudioPlayer")) {
+            return true;
+        }
+
         if (session == null || session.getApplication() == null
-                || session.getApplication().getApplicationId() == null) {
+                || session.getApplication().getApplicationId() == null
+                ) {
+
             return false;
         }
 

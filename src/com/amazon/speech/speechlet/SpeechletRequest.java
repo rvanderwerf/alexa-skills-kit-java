@@ -13,6 +13,7 @@ package com.amazon.speech.speechlet;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -27,7 +28,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
         // The sub types that extend the SpeechletRequest class.
         @Type(value = LaunchRequest.class),
         @Type(value = IntentRequest.class),
-        @Type(value = AudioPlayerRequest.class),
+        @Type(value = AudioPlayerRequestPlaybackStarted.class, name="AudioPlayer.PlaybackStarted"),
+        @Type(value = AudioPlayerRequestPlaybackNearlyFinished.class, name="AudioPlayer.PlaybackNearlyFinished"),
+        @Type(value = AudioPlayerRequestPlaybackFinished.class, name="AudioPlayer.PlaybackFinished"),
         @Type(value = SessionStartedRequest.class),
         @Type(value = SessionEndedRequest.class)
 })
@@ -43,6 +46,7 @@ public abstract class SpeechletRequest {
 
     public String locale = "";
 
+    @JsonProperty("type")
     public String audioType = "";
 
 

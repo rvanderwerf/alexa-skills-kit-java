@@ -25,26 +25,13 @@ import java.util.Date;
 @JsonTypeName("AudioPlayerRequest")
 public class AudioPlayerRequest extends SpeechletRequest {
 
+    @JsonProperty("type")
+    String audioType;
 
-    /**
-     * Returns a new builder instance used to construct a new {@code IntentRequest}.
-     *
-     * @return the builder
-     */
-    public static Builder builder() {
-        return new Builder();
-    }
 
-    /**
-     * Private constructor to return a new {@code IntentRequest} from a {@code Builder}.
-     *
-     * @param builder
-     *            the builder used to construct the {@code IntentRequest}.
-     */
-    private AudioPlayerRequest(final Builder builder) {
-        super(builder.requestId, builder.timestamp, builder.audioType, builder.token,builder.offsetInMilliseconds,builder.locale);
 
-    }
+
+
 
     /**
      * Protected constructor used for JSON serialization and for extending this class.
@@ -74,53 +61,5 @@ public class AudioPlayerRequest extends SpeechletRequest {
 
 
 
-    /**
-     * Builder used to construct a new {@code IntentRequest}.
-     */
-    public static final class Builder {
-        private String requestId;
-        private Date timestamp = new Date();
-        private String audioType;
-        private String token;
-        private String locale;
-        private int offsetInMilliseconds = 0;
 
-        private Builder() {
-        }
-
-        public Builder withRequestId(final String requestId) {
-            this.requestId = requestId;
-            return this;
-        }
-
-        public Builder withTimestamp(final Date timestamp) {
-            this.timestamp = (timestamp != null) ? new Date(timestamp.getTime()) : null;
-            return this;
-        }
-
-
-        public Builder withType(final String audioType) {
-            this.audioType = audioType;
-            return this;
-        }
-
-        public Builder withToken(final String token) {
-            this.token = token;
-            return this;
-        }
-        public Builder withLocale(final String locale) {
-            this.locale = locale;
-            return this;
-        }
-        public Builder withOffsetInMilliseconds(final int offsetInMilliseconds) {
-            this.offsetInMilliseconds = offsetInMilliseconds;
-            return this;
-        }
-
-        public AudioPlayerRequest build() {
-            Validate.notBlank(requestId, "RequestId must be defined");
-            Validate.notBlank(audioType, "type must be defined");
-            return new AudioPlayerRequest(this);
-        }
-    }
 }
